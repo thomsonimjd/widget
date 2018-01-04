@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<title>Widget</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script>
+         var btcPerEth;
+         var newBtcAddress;
+        $(document).ready(function(){
+
+
+            var btcUrl = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC';
+            $.get( btcUrl, function( data ) {
+                btcPerEth = data.BTC;
+            });
+
+            $("#next").click(function () {
+               $("#pay").addClass("active");
+               $("#info").removeClass("active");
+            });
+            $("#contribute").click(function () {
+                $("#info").addClass("active");
+                $("#active").removeClass("active");
+            });
+		    $("#hideshow").hide();
+            $("#content").click(function(){
+                $("#hideshow").slideToggle();
+            });
+            $('#enable').on('click', function() {
+                $('.demo').enable();
+            });
+            $(".coin_short").click(function(){
+                console.log(this);
+                var name=$(this).text();
+                //alert(name);
+                $('#content').text(name);
+                $(".coin_short").click(function(){
+                    $("#hideshow").hide();
+                });
+            });
+        });
+
+        function calculateTokenValue()
+        {
+
+            var requestTokenValue = $('#tokenValue').val();
+
+            var totalEtherValue =  requestTokenValue / 1000;
+
+            var totalBtc = totalEtherValue * btcPerEth;
+
+            $('#coinValue').val(totalBtc);
+
+            sessionStorage.setItem("tokenValue", requestTokenValue);
+            sessionStorage.setItem("etherValue", totalEtherValue);
+            sessionStorage.setItem("coinValue", totalBtc);
+        }
+
+        function getContributorInfo() {
+            var emailId = $('#emailId').val();
+            var ethAddress = $('#ethAddress').val();
+
+            var coinValue = sessionStorage.getItem("coinValue");
+
+            sessionStorage.setItem("emailId", emailId);
+            sessionStorage.setItem("ethAddress", ethAddress);
+
+            $.get( 'http://10.0.0.13:3001/createNewBtcAccount', function( data ) {
+                newBtcAddress = data.data;
+               sessionStorage.setItem("address", data.data);
+               sessionStorage.setItem("invoice", data.invoice);
+
+                document.getElementById('qrcode').src = 'https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:' + data.data + '&amount='+coinValue+'/>';
+                $('#invoice').text(data.invoice);
+                $('#paymentCoinValue').text(coinValue);
+                $('#coinAddress').text(data.data);
+                $('#userEthaddress').text(ethAddress);
+            });
+
+        }
+
+    </script>
+</head>
+<body>
+<div class="row header  main-row">
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <h3>Contribution Widget</h3>
+            </div>
+            <div class="col-sm-6">
+<!--<img src="assets/images/download.png" alt="">-->
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row main-row">
+        <div class="col-md-12">
+            <div class="tabbable-panel">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="active">
+                            <a href="#tab_default_1" data-toggle="tab">Count Up</a>
+                        </li>
+                        <li id="info" disable="true">
+                            <a href="#tab_default_2" data-toggle="tab">Contributor Info</a>
+                        </li>
+                        <li id="pay">
+                            <a href="#tab_default_3" data-toggle="tab">Payment</a>
+                        </li>
+                        <li>
+                            <a href="#tab_default_4" data-toggle="tab">Status</a>
+                        </li>
+                    </ul>
+                    <div class="row tab-content">
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="tab_default_1">
+						<div class="implement">
+                            <label for="">
+                                No of tokens to contribute:</label>
+
+                            <div class="input-group">
+                                <input type="text" onkeyup="calculateTokenValue()" class="form-control" placeholder="No of tokens"
+                                  id="tokenValue"     aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2">TOKEN</span>
+                            </div>
+                            <label for="">Contribute with:</label>
+                            <div class="input-group input-group-currency"><div class="input-group-addon uppercase" style="color:#00796b;">you give</div>
+                                <input type="text" name="amount" class="form-control" value="" id="coinValue" placeholder="">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle uppercase dropdown-toggle-big" id='content'style="background:#eeeeee; !important;">Bitcoin
+                                        <span class="glyphicon glyphicon-chevron-down" style="color:#00796b"></span></button>
+                            </div>
+                            </div>
+                            <button class="button contribute-btn" id="contribute"><span><a  href="#tab_default_2" data-toggle="tab" style="color:#fff;">Contribute</a></span></button>
+                            <ul class="dropdown-menu" id="hideshow">
+                                <li class="coin_short"><a href="#">BitCoin</a></li>
+                                <li class="coin_short"><a href="#">DashCoin</a></li>
+                                <li class="coin_short"><a href="#">LiteCoin</a></li>
+                            </ul>
+                        </div>
+                        </div>
+
+ <!-- SECOND TAB-->
+
+                          <div class="tab-pane" id="tab_default_2">
+                            <div class="implement">
+                                <label for="">Your Ether Address:</label>
+                            <div class="input-group">
+                                <input type="text" id="ethAddress" class="form-control" placeholder="Enter The Ether Address" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="">ETHER</span>
+                            </div>
+                                <label for="">Your Email Address:</label>
+                            <div class="input-group input-group-currency">
+                                <input type="text" id="emailId" name="amount" class="form-control" value="" placeholder="Enter The your Email Address">
+                                <span class="input-group-addon">EMAIL</span>
+                            </div>
+                                <button class="button contribute-btn" onclick="getContributorInfo()" id="next"><span><a href="#tab_default_3" data-toggle="tab">Next</a></span></button>
+
+                            </div>
+                              <div class="note-content">
+                                  <h5>Note:</h5>
+                                  <p>Above given ether address would get token as per the transactions and invoice bill would be sent to the above given mail address.</p>
+                              </div>
+                    </div>
+
+            <!--    3 TAB  -->
+                        <div class="tab-pane" id="tab_default_3">
+                            <div class="container">
+                            <div class="col-sm-12 tab-provide" style="width: 82%;">
+
+                                <div class="col-sm-6 provide1">
+                                    <ol class="provide">
+                                        <li>Send The BTC to the provide Address:  <b id="coinAddress"></b></li>
+                                        <li>Once the <b id='paymentCoinValue'></b> BTC has been received with three confirmations </li>
+                                        <li>Tokens will be sent to your ether address <b id="userEthaddress"></b></li>
+                                    </ol>
+                                    <h3>For Support Please Contact:<span style="color: #00796B">aequalis@gmail.com</span></h3>
+                                    <h5><i class="fa fa-spin fa-spinner" aria-hidden="true"></i> Waiting for payment from you</h5>
+                                    </br>
+                                </div>
+                                <div class="col-sm-6 qr-img" style="text-align: center;">
+                                    <div class="">
+                                    <h2 class="invoice">Invoice No:<b id="invoice"></b></h2>
+                                    <img src="" id="qrcode"> <br>
+                                    <div class="clearfix">&nbsp;</div>
+
+                                    <button type="button" class="btn btn-success" style="background: #00796b;">Copied Address</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+             <!--    4 TAB  -->
+                            <div class="tab-pane" id="tab_default_4">
+                                <h1>Thank You</h1>
+                            </div>
+            </div>
+        </div>
+      </div>
+     </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+/***
+Bootstrap Line Tabs by @keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+***/
+body{
+    overflow-x: hidden;
+    font-family: 'Snippet', sans-serif;
+}
+.main-row{
+    width: 83%;
+}
+.header{
+    background-color: #00796B;
+    color: #fff;
+}
+.header h3{;
+    font-size: 16px;
+    font-weight: bold;
+}
+.tabbable-panel {
+    border:0px solid #eee;
+    padding: 10px;
+}
+
+/* Default mode */
+.tabbable-line > .nav-tabs {
+    border: none;
+    /*
+    margin: 0px 22%;
+    */
+}
+.tabbable-line > .nav-tabs > li {
+    margin-right: 2px;
+}
+.tabbable-line > .nav-tabs > li > a {
+    border: 0;
+    margin-right: 0;
+    color: #737373;
+}
+.tabbable-line > .nav-tabs > li > a > i {
+    color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+    border-bottom: 4px solid #00796B;
+}
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+    border: 0;
+    background: none !important;
+    color: #333333;
+}
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+    color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+    margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active {
+    border-bottom: 4px solid #00796B;
+    position: relative;
+}
+.tabbable-line > .nav-tabs > li.active > a {
+    border: 0;
+    color: #333333;
+}
+.tabbable-line > .nav-tabs > li.active > a > i {
+    color: #404040;
+}
+.tabbable-line > .tab-content {
+    background-color: rgba(204, 204, 204, 0.27);
+    border: 0;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    height: 350px;
+}
+.portlet .tabbable-line > .tab-content {
+    padding-bottom: 0;
+}
+.uppercase {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.item__wrapper:hover {
+    background-color: #eee;
+}
+.item__wrapper {
+    margin: 0;
+    font-size: 12px;
+    line-height: 30px;
+    cursor: pointer;
+    border-bottom: 1px solid #dedede;
+}
+.list__wrapper {
+    background-color: #d3d3d3;
+    border-top: 1px solid #dedede;
+}
+/*button-csscode*/
+.button {
+    border-radius: 4px;
+    background-color: #00796B;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+    width: 150px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 1px 13px;
+}
+label{
+    color: #00796b;
+    padding: 12px 0;
+}
+.implement{
+    width: 71%;
+    margin: 1% 13%;
+}
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.list-unstyled li{
+    padding: 8px 12px !important;
+    line-height: 10px !important;
+}
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button:hover span {
+    padding-right: 25px;
+}
+
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+.tab-provide{
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 13px #ccc;
+}
+.provide{
+    font-size: 12px;
+    margin-top: 4%;
+    line-height: 24px;
+}
+.invoice{
+    text-align: left;
+    font-size: 13px;
+}
+.qr-img img{
+    width: 61%;
+    text-align: center;
+}
+.provide1 h3{
+    font-size: 11px;
+    line-height: 48px;
+}
+a{
+    color: #fff;
+}
+a:hover{
+    text-decoration: none !important;
+    color: #ccc !important;
+
+}
+/*#hideshow::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#hideshow::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+#hideshow::-webkit-scrollbar-thumb
+{
+    background-color: #000000;
+}*/
+#hideshow {
+    margin: 0 64%;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 57% !important;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+	color:#000 !important;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+.note-content{
+    margin: 12%;
+}
+.note-content h5{
+    color: #00796b;
+}
+.contribute-btn{
+    float: right;
+    margin: 2% 0;
+}
+.serch-main{
+    border-bottom: 1px solid rgba(204, 204, 204, 0.71) !important;
+    border: 0px solid;
+    width: 100%;
+    margin: 0;
+    padding: 0 19px;
+}
